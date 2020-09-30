@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FilmDto {
+    private Long id;
     private String movie_title;
     private int year;
 }

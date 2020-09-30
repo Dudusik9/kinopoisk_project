@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActorDto {
-
+    private Long id;
     private String first_name;
     private String second_name;
     private int year_of_birth;
