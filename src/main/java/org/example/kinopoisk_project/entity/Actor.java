@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class ActorController {
 
     @GetMapping
-    public ActorDto getActor(){
+    public ActorDto getActorById(@PathVariable("id") Long id){
         return new ActorDto();
     }
 

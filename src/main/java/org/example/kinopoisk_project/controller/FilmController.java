@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class FilmController {
 
     @GetMapping
-    public FilmDto getFilm(){
+    public FilmDto getFilmById(@PathVariable("id") Long id){
         return new FilmDto();
     }
 
