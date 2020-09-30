@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.*;
 public class FeedbackController {
 
     @GetMapping
-    public FeedbackDto getFeedbcak(){
+    public FeedbackDto getFeedback(){
         return new FeedbackDto();
     }
 
     @PostMapping
-    public Feedback saveFeedback(@RequestBody Feedback feedback){
+    public FeedbackDto saveFeedback(@RequestBody FeedbackDto feedback){
         return feedback;
     }
 
     @PutMapping
-    public Feedback updateFeedback(@RequestBody Feedback feedback){
+    public FeedbackDto updateFeedback(@RequestBody FeedbackDto feedback){
         return feedback;
     }
 

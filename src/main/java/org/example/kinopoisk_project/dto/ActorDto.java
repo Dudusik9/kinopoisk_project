@@ -1,5 +1,6 @@
 package org.example.kinopoisk_project.dto;
 
+
 import lombok.*;
 
 @Getter
@@ -11,6 +12,6 @@ public class ActorDto {
 
     private String first_name;
     private String second_name;
-    private int year_of_bith;
+    private int year_of_birth;
 
 }
