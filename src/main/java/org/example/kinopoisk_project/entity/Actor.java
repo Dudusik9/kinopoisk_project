@@ -10,12 +10,8 @@ import java.util.Objects;
 @Table(name = "actors")
 @Getter
 @Setter
-public class Actor {
-    @Id
-    @GeneratedValue
-    @Column(name = "id_actor")
-    private Long id;
-
+@AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "id_actor")))
+public class Actor extends EntityBase{
     @Column(name = "first_name")
     private String firstName;
 
@@ -24,17 +20,4 @@ public class Actor {
 
     @Column(name = "year_of_birth")
     private Integer yearOfBirth;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Actor actor = (Actor) o;
-        return Objects.equals(id, actor.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

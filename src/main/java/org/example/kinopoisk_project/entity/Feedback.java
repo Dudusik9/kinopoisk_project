@@ -11,12 +11,8 @@ import java.util.Objects;
 @Table(name = "feedback")
 @Getter
 @Setter
-public class Feedback {
-    @Id
-    @GeneratedValue
-    @Column(name = "id_feedback")
-    private Long id;
-
+@AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "id_feedback")))
+public class Feedback extends EntityBase{
     @Column(name = "id_user")
     private Integer idUser;
 
@@ -25,17 +21,4 @@ public class Feedback {
 
     @Column(name = "text")
     private String text;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Feedback feedback = (Feedback) o;
-        return Objects.equals(id, feedback.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
