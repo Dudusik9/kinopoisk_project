@@ -23,7 +23,7 @@ public class Actor {
     private String secondName;
 
     @Column(name = "year_of_birth")
-    private String yearOfBirth;
+    private Integer yearOfBirth;
 
     @Override
     public boolean equals(Object o) {

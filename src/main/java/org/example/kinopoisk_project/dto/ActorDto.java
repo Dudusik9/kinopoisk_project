@@ -14,16 +14,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActorDto {
-
-
+    @JsonProperty("id_actor")
     private Long id;
 
     @JsonProperty("first_name")
-    private String first_name;
+    private String firstName;
 
     @JsonProperty("second_name")
-    private String second_name;
+    private String secondName;
 
     @JsonProperty("year_of_birth")
-    private int year_of_birth;
+    private int yearOfBirth;
 }

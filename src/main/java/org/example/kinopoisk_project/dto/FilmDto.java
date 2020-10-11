@@ -1,5 +1,6 @@
 package org.example.kinopoisk_project.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +13,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FilmDto {
-
+    @JsonProperty("id_film")
     private Long id;
-    private String movie_title;
+
+    @JsonProperty("movie_title")
+    private String movieTitle;
+
+    @JsonProperty("year")
     private int year;
 }

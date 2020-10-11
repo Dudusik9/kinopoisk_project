@@ -17,6 +17,12 @@ public class Feedback {
     @Column(name = "id_feedback")
     private Long id;
 
+    @Column(name = "id_user")
+    private Integer idUser;
+
+    @Column(name = "id_film")
+    private Integer idFilm;
+
     @Column(name = "text")
     private String text;
 
