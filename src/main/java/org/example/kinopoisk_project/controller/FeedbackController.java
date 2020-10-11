@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("feedback")
 public class FeedbackController {
 
-    @GetMapping
+    @GetMapping("/feedback/{id}")
     public FeedbackDto getFeedbackById(@PathVariable("id") Long id){
         return new FeedbackDto();
     }

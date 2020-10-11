@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("film")
 public class FilmController {
 
-    @GetMapping
+    @GetMapping("/film/{id}")
     public FilmDto getFilmById(@PathVariable("id") Long id){
         return new FilmDto();
     }
 
     @PostMapping
-    public FilmDto saveFilm (@RequestBody FilmDto film){
+    public FilmDto addNewFilm(@RequestBody FilmDto film){
         return film;
     }
 

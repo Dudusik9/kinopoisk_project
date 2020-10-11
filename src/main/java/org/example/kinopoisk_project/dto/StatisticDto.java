@@ -1,21 +1,21 @@
 package org.example.kinopoisk_project.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto{
+public class StatisticDto {
     @JsonProperty("id_user")
     private Long id;
 
-    @JsonProperty("nickname")
-    private String nickname;
+    @JsonProperty("number_of_feedback")
+    private Long numberOfFeedback;
+
+    @JsonProperty("number_of_visits")
+    private Long numberOfVisits;
 }
