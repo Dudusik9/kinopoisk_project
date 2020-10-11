@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.kinopoisk_project.entity.Film;
+import org.example.kinopoisk_project.entity.User;
 
 @Getter
 @Setter
@@ -13,14 +15,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedbackDto {
-    @JsonProperty("id_feedback")
+    @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("id_user")
-    private Integer idUser;
+    @JsonProperty("user")
+    private Long userId;
 
-    @JsonProperty("id_film")
-    private Integer idFilm;
+    @JsonProperty("film")
+    private Long filmId;
 
     @JsonProperty("text")
     private String text;

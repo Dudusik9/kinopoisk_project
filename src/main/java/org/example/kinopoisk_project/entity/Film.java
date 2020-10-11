@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "films")
@@ -17,4 +17,13 @@ public class Film extends EntityBase{
 
     @Column(name = "year")
     private Integer year;
+
+//    Связь один фильм - много отзывов
+    @OneToMany(mappedBy = "filmFeedback", fetch = FetchType.LAZY)
+    private List<Feedback> feedback = new ArrayList<>();
+
+//    Связь ManyToMaNy. Много фильма - много актеров
+    @ManyToMany(mappedBy = "filmList")
+    private Set<Actor> actorList = new HashSet<>();
+
 }

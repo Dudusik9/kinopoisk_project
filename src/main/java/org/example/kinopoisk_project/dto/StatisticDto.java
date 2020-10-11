@@ -10,12 +10,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StatisticDto {
-    @JsonProperty("id_user")
+    @JsonProperty("userId")
     private Long id;
 
-    @JsonProperty("number_of_feedback")
+    @JsonProperty("numberOfFeedback")
     private Long numberOfFeedback;
 
-    @JsonProperty("number_of_visits")
+    @JsonProperty("numberOfVisits")
     private Long numberOfVisits;
 }

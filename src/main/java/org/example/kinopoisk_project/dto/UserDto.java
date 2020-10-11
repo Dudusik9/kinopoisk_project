@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto{
-    @JsonProperty("id_user")
+    @JsonProperty("id")
     private Long id;
 
     @JsonProperty("nickname")

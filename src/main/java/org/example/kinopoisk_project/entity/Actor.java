@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "actors")
@@ -20,4 +20,15 @@ public class Actor extends EntityBase{
 
     @Column(name = "year_of_birth")
     private Integer yearOfBirth;
+
+
+//    Связь ManyToMaNy. Много актеров - много фильмов
+    @ManyToMany
+        @JoinTable(
+                name = "actors_films",
+                joinColumns = @JoinColumn(name = "id_film"),
+                inverseJoinColumns = @JoinColumn(name = "id_actor")
+        )
+    private Set<Film> filmList = new HashSet<>();
+
 }

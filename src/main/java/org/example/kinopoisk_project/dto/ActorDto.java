@@ -7,6 +7,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.kinopoisk_project.entity.Film;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,15 +18,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActorDto {
-    @JsonProperty("id_actor")
+    @JsonProperty("actorId")
     private Long id;
 
-    @JsonProperty("first_name")
+    @JsonProperty("firstName")
     private String firstName;
 
-    @JsonProperty("second_name")
+    @JsonProperty("secondName")
     private String secondName;
 
-    @JsonProperty("year_of_birth")
+    @JsonProperty("yearOfBirth")
     private int yearOfBirth;
+
 }

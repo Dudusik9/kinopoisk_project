@@ -15,4 +15,10 @@ public class Statistic extends EntityBase{
 
     @Column(name = "number_of_visits")
     private Long numberOfVisits;
+
+//  Связь один пользователь - одна статистика
+    @OneToOne
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
+    private User userStatistic;
+
 }
