@@ -3,6 +3,7 @@ package org.example.kinopoisk_project.service.Impl;
 import org.example.kinopoisk_project.dto.StatisticDto;
 import org.example.kinopoisk_project.entity.Statistic;
 import org.example.kinopoisk_project.repository.StatisticRepository;
+import org.example.kinopoisk_project.repository.UserRepository;
 import org.example.kinopoisk_project.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class StatisticServiceImpl implements StatisticService {
 
     private final StatisticRepository statisticRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public StatisticServiceImpl(StatisticRepository statisticRepository) {
+    public StatisticServiceImpl(StatisticRepository statisticRepository, UserRepository userRepository) {
         this.statisticRepository = statisticRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -27,12 +30,10 @@ public class StatisticServiceImpl implements StatisticService {
                 .build();
     }
 
-//    Этот метод не добавляет данные в табл.
-//    Cannot add or update a child row: a foreign key constraint fails
     @Override
     public StatisticDto addNewStatistic(StatisticDto statisticDto) {
         Statistic statistic = new Statistic();
-        statistic.setId(statisticDto.getId());
+        statistic.setId(userRepository.findById(statisticDto.getId()).orElseThrow(()->new IllegalArgumentException("")).getId());
         statistic.setNumberOfFeedback(statisticDto.getNumberOfFeedback());
         statistic.setNumberOfVisits(statisticDto.getNumberOfVisits());
         statistic = statisticRepository.save(statistic);
