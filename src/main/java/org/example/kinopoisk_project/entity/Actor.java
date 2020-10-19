@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Entity
 @Table(name = "actors")
 @Getter
 @Setter
+@Transactional
 @AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "id_actor")))
 public class Actor extends EntityBase{
     @Column(name = "first_name")
@@ -21,14 +23,15 @@ public class Actor extends EntityBase{
     @Column(name = "year_of_birth")
     private Integer yearOfBirth;
 
-
 //    Связь ManyToMaNy. Много актеров - много фильмов
-    @ManyToMany
+//    @JoinTable указывается у объекта владельца,
+//    joinColumns — имя столбца, связывающего с классом владельцем,
+//    inverseJoinColumns — имя столбца, связывающего с владеемым классом.
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
         @JoinTable(
                 name = "actors_films",
-                joinColumns = @JoinColumn(name = "id_film"),
-                inverseJoinColumns = @JoinColumn(name = "id_actor")
+                joinColumns = @JoinColumn(name = "id_actor"),
+                inverseJoinColumns = @JoinColumn(name = "id_film")
         )
     private Set<Film> filmList = new HashSet<>();
-
 }

@@ -26,11 +26,11 @@ public class User extends EntityBase{
 
 
 //  Связь один пользователь - много комментариев
-    @OneToMany(mappedBy = "userFeedback", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userFeedback", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Feedback> feedbackList = new ArrayList<>();
 
 // Связь один пользователь - одна статистика
-    @OneToOne(mappedBy = "userStatistic")
+    @OneToOne(mappedBy = "userStatistic", cascade = CascadeType.ALL)
     private Statistic statistic;
 
 
