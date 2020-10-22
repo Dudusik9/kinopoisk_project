@@ -1,9 +1,12 @@
 package org.example.kinopoisk_project.controller;
 
+import org.example.kinopoisk_project.dto.ActorDto;
 import org.example.kinopoisk_project.dto.FilmDto;
 import org.example.kinopoisk_project.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("film")
@@ -24,6 +27,11 @@ public class FilmController {
     @PostMapping
     public FilmDto addNewFilm(@RequestBody FilmDto film) {
         return filmService.addNewFilm(film);
+    }
+
+    @PostMapping("/get")
+    public List<FilmDto> getFilmsByActor(@RequestBody ActorDto actorDto){
+        return filmService.findFilmsByActor(actorDto);
     }
 
     @PutMapping

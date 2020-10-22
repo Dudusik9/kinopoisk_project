@@ -19,10 +19,11 @@ import java.util.Set;
 public class User extends EntityBase{
     @Column(name = "nickname")
     private String nickname;
-    //    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_user"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> role;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_user"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> role;
 
 
 //  Связь один пользователь - много комментариев

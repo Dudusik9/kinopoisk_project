@@ -5,6 +5,8 @@ import lombok.Setter;
 import sun.awt.SunHints;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +28,7 @@ public class Feedback extends EntityBase{
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User userFeedback;
+
 
 //  Связь много отзывов - один фильм
     @ManyToOne

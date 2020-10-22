@@ -1,11 +1,16 @@
 package org.example.kinopoisk_project.service.Impl;
 
 import org.example.kinopoisk_project.dto.ActorDto;
+import org.example.kinopoisk_project.dto.FilmDto;
 import org.example.kinopoisk_project.entity.Actor;
+import org.example.kinopoisk_project.entity.Film;
 import org.example.kinopoisk_project.repository.ActorRepository;
 import org.example.kinopoisk_project.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ActorServiceImpl implements ActorService {
@@ -25,6 +30,20 @@ public class ActorServiceImpl implements ActorService {
                 .secondName(actor.getSecondName())
                 .yearOfBirth(actor.getYearOfBirth())
                 .build();
+    }
+
+    @Override
+    public List<ActorDto> findActorsByFilm(FilmDto filmDto){
+        Film film = new Film();
+        film.setId(filmDto.getId());
+        film.setMovieTitle(filmDto.getMovieTitle());
+        film.setYear(filmDto.getYear());
+        List<Actor> actorList = actorRepository.findActorByFilmListContains(film);
+        return actorList.stream().map(actor -> ActorDto.builder().id(actor.getId())
+                .firstName(actor.getFirstName())
+                .secondName(actor.getSecondName())
+                .yearOfBirth(actor.getYearOfBirth())
+                .build()).collect(Collectors.toList());
     }
 
     @Override

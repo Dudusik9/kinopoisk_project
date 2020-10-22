@@ -1,11 +1,18 @@
 package org.example.kinopoisk_project.service.Impl;
 
+import org.example.kinopoisk_project.dto.ActorDto;
 import org.example.kinopoisk_project.dto.FilmDto;
+import org.example.kinopoisk_project.entity.Actor;
 import org.example.kinopoisk_project.entity.Film;
 import org.example.kinopoisk_project.repository.FilmRepository;
 import org.example.kinopoisk_project.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -21,6 +28,19 @@ public class FilmServiceImpl implements FilmService {
     public FilmDto getFilmById(Long id) {
         Film film = filmRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Film didn't find"));
         return FilmDto.builder().id(film.getId()).movieTitle(film.getMovieTitle()).year(film.getYear()).build();
+    }
+
+    @Override
+    public List<FilmDto> findFilmsByActor(ActorDto actorDto) {
+        Actor actor = new Actor();
+        actor.setId(actorDto.getId());
+        actor.setFirstName(actorDto.getFirstName());
+        actor.setSecondName(actorDto.getSecondName());
+        actor.setYearOfBirth(actorDto.getYearOfBirth());
+        List<Film> filmList = filmRepository.findFilmByActorListContains(actor);
+        return filmList.stream()
+                .map(film -> FilmDto.builder().id(film.getId()).movieTitle(film.getMovieTitle()).year(film.getYear()).build())
+                .collect(Collectors.toList());
     }
 
     @Override
