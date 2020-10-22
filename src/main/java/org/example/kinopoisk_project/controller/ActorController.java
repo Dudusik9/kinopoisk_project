@@ -43,7 +43,6 @@ public class ActorController {
     @DeleteMapping("/{id}")
     public void deleteActor(@PathVariable("id") Long id){
         actorService.deleteActor(id);
-        System.out.println("Actor was deleted");
     }
 
 }

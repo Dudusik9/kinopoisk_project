@@ -7,8 +7,8 @@ import org.example.kinopoisk_project.entity.Film;
 import org.example.kinopoisk_project.repository.ActorRepository;
 import org.example.kinopoisk_project.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,48 +16,32 @@ import java.util.stream.Collectors;
 public class ActorServiceImpl implements ActorService {
 
     private final ActorRepository actorRepository;
+    private final ConversionService conversionService;
 
     @Autowired
-    public ActorServiceImpl(ActorRepository actorRepository) {
+    public ActorServiceImpl(ActorRepository actorRepository, ConversionService conversionService) {
         this.actorRepository = actorRepository;
+        this.conversionService = conversionService;
     }
 
     @Override
     public ActorDto getActorById(Long id) {
         Actor actor = actorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Actor didn't find"));
-        return ActorDto.builder().id(actor.getId())
-                .firstName(actor.getFirstName())
-                .secondName(actor.getSecondName())
-                .yearOfBirth(actor.getYearOfBirth())
-                .build();
+        return conversionService.convert(actor, ActorDto.class);
     }
 
     @Override
     public List<ActorDto> findActorsByFilm(FilmDto filmDto){
-        Film film = new Film();
-        film.setId(filmDto.getId());
-        film.setMovieTitle(filmDto.getMovieTitle());
-        film.setYear(filmDto.getYear());
+        Film film = conversionService.convert(filmDto, Film.class);
         List<Actor> actorList = actorRepository.findActorByFilmListContains(film);
-        return actorList.stream().map(actor -> ActorDto.builder().id(actor.getId())
-                .firstName(actor.getFirstName())
-                .secondName(actor.getSecondName())
-                .yearOfBirth(actor.getYearOfBirth())
-                .build()).collect(Collectors.toList());
+        return actorList.stream().map(actor -> conversionService.convert(actor, ActorDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public ActorDto addNewActor(ActorDto actorDto) {
-        Actor actor = new Actor();
-        actor.setFirstName(actorDto.getFirstName());
-        actor.setSecondName(actorDto.getSecondName());
-        actor.setYearOfBirth(actorDto.getYearOfBirth());
+        Actor actor = conversionService.convert(actorDto, Actor.class);
         actor = actorRepository.save(actor);
-        return ActorDto.builder().id(actor.getId())
-                .firstName(actor.getFirstName())
-                .secondName(actor.getSecondName())
-                .yearOfBirth(actor.getYearOfBirth())
-                .build();
+        return conversionService.convert(actor, ActorDto.class);
     }
 
     @Override
@@ -67,11 +51,7 @@ public class ActorServiceImpl implements ActorService {
         actor.setSecondName(actorDto.getSecondName());
         actor.setYearOfBirth(actorDto.getYearOfBirth());
         actor = actorRepository.save(actor);
-        return ActorDto.builder().id(actor.getId())
-                .firstName(actor.getFirstName())
-                .secondName(actor.getSecondName())
-                .yearOfBirth(actor.getYearOfBirth())
-                .build();
+        return conversionService.convert(actor, ActorDto.class);
     }
 
     @Override

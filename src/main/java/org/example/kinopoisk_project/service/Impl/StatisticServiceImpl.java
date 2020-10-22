@@ -6,6 +6,7 @@ import org.example.kinopoisk_project.repository.StatisticRepository;
 import org.example.kinopoisk_project.repository.UserRepository;
 import org.example.kinopoisk_project.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,21 +14,19 @@ public class StatisticServiceImpl implements StatisticService {
 
     private final StatisticRepository statisticRepository;
     private final UserRepository userRepository;
+    private final ConversionService conversionService;
 
     @Autowired
-    public StatisticServiceImpl(StatisticRepository statisticRepository, UserRepository userRepository) {
+    public StatisticServiceImpl(StatisticRepository statisticRepository, UserRepository userRepository, ConversionService conversionService) {
         this.statisticRepository = statisticRepository;
         this.userRepository = userRepository;
+        this.conversionService = conversionService;
     }
 
     @Override
     public StatisticDto getStatisticByUserId(Long id) {
         Statistic statistic = statisticRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Statistic didn't find"));
-        return StatisticDto.builder()
-                .id(statistic.getId())
-                .numberOfFeedback(statistic.getNumberOfFeedback())
-                .numberOfVisits(statistic.getNumberOfVisits())
-                .build();
+        return conversionService.convert(statistic, StatisticDto.class);
     }
 
     @Override
@@ -37,11 +36,7 @@ public class StatisticServiceImpl implements StatisticService {
         statistic.setNumberOfFeedback(statisticDto.getNumberOfFeedback());
         statistic.setNumberOfVisits(statisticDto.getNumberOfVisits());
         statistic = statisticRepository.save(statistic);
-        return StatisticDto.builder()
-                .id(statistic.getId())
-                .numberOfFeedback(statistic.getNumberOfFeedback())
-                .numberOfVisits(statistic.getNumberOfVisits())
-                .build();
+        return conversionService.convert(statistic, StatisticDto.class);
     }
 
     @Override
@@ -50,15 +45,14 @@ public class StatisticServiceImpl implements StatisticService {
         statistic.setNumberOfFeedback(statisticDto.getNumberOfFeedback());
         statistic.setNumberOfVisits(statisticDto.getNumberOfVisits());
         statistic = statisticRepository.save(statistic);
-        return StatisticDto.builder()
-                .id(statistic.getId())
-                .numberOfFeedback(statistic.getNumberOfFeedback())
-                .numberOfVisits(statistic.getNumberOfVisits())
-                .build();
+        return conversionService.convert(statistic, StatisticDto.class);
     }
 
+//    не удаляется статистика
     @Override
     public void deleteStatistic(Long id) {
-        statisticRepository.deleteById(id);
+//        statisticRepository.deleteById(id);
+        Statistic statistic = statisticRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(""));
+        statisticRepository.delete(statistic);
     }
 }

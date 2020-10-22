@@ -35,6 +35,5 @@ public class StatisticController {
     @DeleteMapping("/{userId}")
     public void deleteStatistic(@PathVariable("userId") Long id){
         statisticService.deleteStatistic(id);
-        System.out.println("Statistic was deleted");
     }
 }
