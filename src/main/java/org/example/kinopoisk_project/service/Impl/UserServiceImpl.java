@@ -2,10 +2,10 @@ package org.example.kinopoisk_project.service.Impl;
 
 import org.example.kinopoisk_project.dto.UserDto;
 import org.example.kinopoisk_project.entity.User;
-import org.example.kinopoisk_project.model.Role;
 import org.example.kinopoisk_project.repository.UserRepository;
 import org.example.kinopoisk_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,41 +14,46 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ConversionService conversionService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, ConversionService conversionService) {
         this.userRepository = userRepository;
+        this.conversionService = conversionService;
     }
 
     @Override
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User didn't find"));
-        return UserDto.builder().id(user.getId()).nickname(user.getNickname()).build();
+        return conversionService.convert(user, UserDto.class);
     }
+
 
     @Override
     public List<UserDto> getAllUsers() {
         List<User> userList = (List)userRepository.findAll();
         return userList.stream()
-                .map(user -> UserDto.builder().id(user.getId()).nickname(user.getNickname()).build())
+                .map(user -> conversionService.convert(user, UserDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDto createUser(UserDto userDto)
     {
-        User user = new User();
-        user.setNickname(userDto.getNickname());
+        User user = conversionService.convert(userDto, User.class);
         user = userRepository.save(user);
-        return UserDto.builder().id(user.getId()).nickname(user.getNickname()).build();
+        return conversionService.convert(user, UserDto.class);
     }
 
     @Override
     public UserDto updateUser(UserDto userDto) {
         User user = userRepository.findById(userDto.getId()).orElseThrow(() -> new IllegalArgumentException("User didn't find"));
         user.setNickname(userDto.getNickname());
+        user.setEmail(userDto.getEmail());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
         user = userRepository.save (user);
-        return UserDto.builder().id(user.getId()).nickname(user.getNickname()).build();
+        return conversionService.convert(user, UserDto.class);
     }
 
     @Override

@@ -31,6 +31,7 @@ public class User extends EntityBase{
     @Column(name = "password")
     private String password;
 
+// Как замапить так, чтобы писалось не в Set<Role>, а в конкретное поле Role
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_role"))
     @Enumerated(EnumType.STRING)

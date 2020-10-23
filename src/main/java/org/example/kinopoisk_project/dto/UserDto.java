@@ -22,6 +22,15 @@ public class UserDto{
     @JsonProperty("nickname")
     private String nickname;
 
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
 //      Реализовать вывод роли
 //    @JsonProperty("role")
 //    private String role;
