@@ -2,6 +2,7 @@ package org.example.kinopoisk_project.service.Impl;
 
 import org.example.kinopoisk_project.dto.UserDto;
 import org.example.kinopoisk_project.entity.User;
+import org.example.kinopoisk_project.model.Role;
 import org.example.kinopoisk_project.repository.UserRepository;
 import org.example.kinopoisk_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

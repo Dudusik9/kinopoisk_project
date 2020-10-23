@@ -19,10 +19,22 @@ public class User extends EntityBase{
     @Column(name = "nickname")
     private String nickname;
 
-//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_user"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> role;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "password")
+    private String password;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_role"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> role;
 
 //  Связь один пользователь - много комментариев
     @OneToMany(mappedBy = "userFeedback", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -31,6 +43,4 @@ public class User extends EntityBase{
 // Связь один пользователь - одна статистика
     @OneToOne(mappedBy = "userStatistic", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Statistic statistic;
-
-
 }
