@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        List<User> userList = (List)userRepository.findAll();
+        List<User> userList = (List<User>)userRepository.findAll();
         return userList.stream()
                 .map(user -> conversionService.convert(user, UserDto.class))
                 .collect(Collectors.toList());
@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto)
     {
         User user = conversionService.convert(userDto, User.class);
+//        По умолчанию роль у всех Guest
+        user.setIdUserRole(2);
         user = userRepository.save(user);
         return conversionService.convert(user, UserDto.class);
     }
@@ -52,6 +54,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setPassword(userDto.getPassword());
         user = userRepository.save (user);
         return conversionService.convert(user, UserDto.class);
     }

@@ -69,9 +69,10 @@ public class CustomUserDetails implements UserDetails {
                 true,
                 true,
 //              Заглушка, необходимо разобрать как вытаскивать из Set User его конкретную роль
-                Role.ADMIN.getAuthorities()
-//                Необходимо отладить
-//                user.getRole().stream().findFirst().orElseThrow(() -> new IllegalArgumentException("Role didn't find")).getAuthorities()
+//                Role.ADMIN.getAuthorities()
+
+//                Пока вот такой костыль
+                user.getIdUserRole() == 1 ? Role.ADMIN.getAuthorities() : Role.GUEST.getAuthorities()
         );
     }
 }

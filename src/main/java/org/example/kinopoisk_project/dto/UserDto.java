@@ -31,6 +31,9 @@ public class UserDto{
     @JsonProperty("last_name")
     private String lastName;
 
+    @JsonProperty("password")
+    private String password;
+
 //      Реализовать вывод роли
 //    @JsonProperty("role")
 //    private String role;

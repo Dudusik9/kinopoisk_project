@@ -20,14 +20,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('read')")
+    @PreAuthorize("hasAuthority('write')")
     public UserDto getUserById(@PathVariable("id") Long id){
-
         return userService.getUserById(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('read')")
+    @PreAuthorize("hasAuthority('write')")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
