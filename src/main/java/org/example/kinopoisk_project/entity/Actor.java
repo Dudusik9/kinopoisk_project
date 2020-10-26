@@ -11,7 +11,6 @@ import java.util.*;
 @Table(name = "actors")
 @Getter
 @Setter
-@Transactional
 @AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "id_actor")))
 public class Actor extends EntityBase{
     @Column(name = "first_name")
@@ -34,4 +33,7 @@ public class Actor extends EntityBase{
                 inverseJoinColumns = @JoinColumn(name = "id_film")
         )
     private Set<Film> filmList = new HashSet<>();
+
+    @Column(name = "image")
+    private String image;
 }

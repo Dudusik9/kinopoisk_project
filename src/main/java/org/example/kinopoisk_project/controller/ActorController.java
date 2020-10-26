@@ -4,9 +4,10 @@ import org.example.kinopoisk_project.dto.ActorDto;
 import org.example.kinopoisk_project.dto.FilmDto;
 import org.example.kinopoisk_project.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
@@ -49,6 +50,18 @@ public class ActorController {
     @PreAuthorize("hasAuthority('write')")
     public void deleteActor(@PathVariable("id") Long id){
         actorService.deleteActor(id);
+    }
+
+    @PostMapping("/{id}/uploadPhoto")
+    @PreAuthorize("hasAuthority('write')")
+    public void singleFileUpload(@PathVariable("id") long id, @RequestParam("file")MultipartFile file){
+        actorService.uploadFile(id, file);
+    }
+
+    @GetMapping("/{id}/downloadPhoto")
+    @PreAuthorize("hasAuthority('read')")
+    public ResponseEntity<byte[]> singleFileDownload(@PathVariable("id") long id) {
+        return actorService.downloadFile(id);
     }
 
 }

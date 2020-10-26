@@ -1,5 +1,6 @@
 package org.example.kinopoisk_project.service.Impl;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.example.kinopoisk_project.dto.ActorDto;
 import org.example.kinopoisk_project.dto.FilmDto;
 import org.example.kinopoisk_project.entity.Actor;
@@ -8,12 +9,23 @@ import org.example.kinopoisk_project.repository.ActorRepository;
 import org.example.kinopoisk_project.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ActorServiceImpl implements ActorService {
+
+    private final String UPLOADED_FOLDER = "C:\\Users\\dimad\\Desktop\\JAVA PROJECTS\\Kinopoisk_project\\repository\\Actors_images\\";
 
     private final ActorRepository actorRepository;
     private final ConversionService conversionService;
@@ -57,5 +69,39 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public void deleteActor(Long id) {
         actorRepository.deleteById(id);
+    }
+
+    @Override
+    public String uploadFile(Long id, MultipartFile file) {
+        try{
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+            Actor actor = actorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Actor didn't find"));
+            actor.setImage(path.toString());
+            actorRepository.save(actor);
+            return "File have been upload";
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return "File haven't been upload";
+        }
+    }
+
+    @Override
+    public ResponseEntity<byte[]> downloadFile(Long id) {
+        try {
+            Actor actor = actorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Actor didn't find"));
+            Path path = Paths.get(actor.getImage());
+            byte[] byteArrayImage = Files.readAllBytes(path);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            headers.setContentLength(byteArrayImage.length);
+            return new ResponseEntity<byte[]>(byteArrayImage, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

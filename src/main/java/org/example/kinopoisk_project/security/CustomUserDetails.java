@@ -3,14 +3,11 @@ package org.example.kinopoisk_project.security;
 import lombok.Data;
 import org.example.kinopoisk_project.entity.User;
 import org.example.kinopoisk_project.model.Role;
-import org.springframework.expression.ExpressionException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class CustomUserDetails implements UserDetails {
@@ -70,7 +67,7 @@ public class CustomUserDetails implements UserDetails {
                 true,
 //              Заглушка, необходимо разобрать как вытаскивать из Set User его конкретную роль
 //                Role.ADMIN.getAuthorities()
-
+//                user.getRole().iterator().next().getAuthorities()
 //                Пока вот такой костыль
                 user.getIdUserRole() == 1 ? Role.ADMIN.getAuthorities() : Role.GUEST.getAuthorities()
         );

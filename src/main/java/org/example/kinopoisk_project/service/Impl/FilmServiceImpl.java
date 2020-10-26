@@ -8,13 +8,23 @@ import org.example.kinopoisk_project.repository.FilmRepository;
 import org.example.kinopoisk_project.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class FilmServiceImpl implements FilmService {
+    private final String UPLOADED_FOLDER = "C:\\Users\\dimad\\Desktop\\JAVA PROJECTS\\Kinopoisk_project\\repository\\Films_images\\";
+
     private final FilmRepository filmRepository;
     private final ConversionService conversionService;
 
@@ -60,4 +70,39 @@ public class FilmServiceImpl implements FilmService {
     public void deleteFilm(Long id) {
         filmRepository.deleteById(id);
     }
+
+    @Override
+    public String uploadFile(Long id, MultipartFile file) {
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+            Film film = filmRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Actor didn't find"));
+            film.setImagePoster(path.toString());
+            filmRepository.save(film);
+            return "Poster have been upload";
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            return "Poster haven't been upload";
+        }
+    }
+
+    @Override
+    public ResponseEntity<byte[]> downloadFile(Long id) {
+        try {
+            Film film = filmRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Actor didn't find"));
+            Path path = Paths.get(film.getImagePoster());
+            byte[] byteArrayImage = Files.readAllBytes(path);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            headers.setContentLength(byteArrayImage.length);
+            return new ResponseEntity<byte[]>(byteArrayImage, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

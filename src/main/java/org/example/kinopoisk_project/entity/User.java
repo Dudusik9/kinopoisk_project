@@ -38,6 +38,7 @@ public class User extends EntityBase{
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_role"))
     @Enumerated(EnumType.STRING)
+////    @Embedded
     private Set<Role> role;
 
 //  Связь один пользователь - много комментариев
