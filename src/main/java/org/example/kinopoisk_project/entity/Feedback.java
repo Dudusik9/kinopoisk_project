@@ -15,11 +15,6 @@ import java.util.Objects;
 @Setter
 @AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "id_feedback")))
 public class Feedback extends EntityBase{
-//    @Column(name = "id_user")
-//    private Long idUser;
-//
-//    @Column(name = "id_film")
-//    private Long idFilm;
 
     @Column(name = "text")
     private String text;
@@ -28,7 +23,6 @@ public class Feedback extends EntityBase{
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User userFeedback;
-
 
 //  Связь много отзывов - один фильм
     @ManyToOne
