@@ -23,44 +23,44 @@ public class FilmController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('read')")
+    @PreAuthorize("hasAuthority('READ')")
     public FilmDto getFilmById(@PathVariable("id") Long id){
         return filmService.getFilmById(id);
     }
 
     @PostMapping("/get")
-    @PreAuthorize("hasAuthority('read')")
+    @PreAuthorize("hasAuthority('READ')")
     public List<FilmDto> getFilmsByActor(@RequestBody ActorDto actorDto){
         return filmService.findFilmsByActor(actorDto);
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public FilmDto addNewFilm(@RequestBody FilmDto film) {
         return filmService.addNewFilm(film);
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public FilmDto updateFilm(@RequestBody FilmDto film){
         return filmService.updateFilm(film);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public void deleteFilm(@PathVariable("id") Long id){
         filmService.deleteFilm(id);
     }
 
 
     @PostMapping("/{id}/uploadPhoto")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public void singleFileUpload(@PathVariable("id") long id, @RequestParam("file") MultipartFile file){
         filmService.uploadFile(id, file);
     }
 
     @GetMapping("/{id}/downloadPhoto")
-    @PreAuthorize("hasAuthority('read')")
+    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<byte[]> singleFileDownload(@PathVariable("id") long id) {
         return filmService.downloadFile(id);
     }

@@ -18,25 +18,25 @@ public class FeedbackController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('read')")
+    @PreAuthorize("hasAuthority('READ')")
     public FeedbackDto getFeedbackById(@PathVariable("id") Long id){
         return feedbackService.getFeedbackById(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public FeedbackDto addNewFeedback(@RequestBody FeedbackDto feedback){
         return feedbackService.addNewFeedback(feedback);
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public FeedbackDto updateFeedback(@RequestBody FeedbackDto feedback){
         return feedbackService.updateFeedback(feedback);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public void deleteFeedback(@PathVariable("id") Long id){
         feedbackService.deleteFeedback(id);
     }

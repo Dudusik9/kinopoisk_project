@@ -18,26 +18,26 @@ public class StatisticController {
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('statisticRead')")
+    @PreAuthorize("hasAuthority('STATISTIC_READ')")
     public StatisticDto getStatisticByUserId(@PathVariable("userId") Long id)
     {
         return statisticService.getStatisticByUserId(id);
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public StatisticDto addNewStatistic (@RequestBody StatisticDto statistic){
         return statisticService.addNewStatistic(statistic);
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public StatisticDto updateStatistic (@RequestBody StatisticDto statistic){
         return statisticService.updateStatistic(statistic);
     }
 
     @DeleteMapping("/{userId}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public void deleteStatistic(@PathVariable("userId") Long id){
         statisticService.deleteStatistic(id);
     }

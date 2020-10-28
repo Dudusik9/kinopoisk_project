@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.kinopoisk_project.model.Role;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -34,7 +31,6 @@ public class UserDto{
     @JsonProperty("password")
     private String password;
 
-//      Реализовать вывод роли
-//    @JsonProperty("role")
-//    private String role;
+    @JsonProperty("id_user_role")
+    private Long idRole;
 }

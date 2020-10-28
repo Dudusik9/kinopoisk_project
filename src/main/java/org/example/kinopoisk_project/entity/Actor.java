@@ -36,4 +36,5 @@ public class Actor extends EntityBase{
 
     @Column(name = "image")
     private String image;
+
 }

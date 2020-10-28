@@ -20,3 +20,5 @@ public class SwaggerConfig {
                 .build();
     }
 }
+
+// http://localhost:8080/swagger-ui.html#/ - описание API

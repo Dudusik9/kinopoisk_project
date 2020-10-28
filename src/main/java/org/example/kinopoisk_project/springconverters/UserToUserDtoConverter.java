@@ -16,6 +16,7 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .password(user.getPassword())
+                .idRole(user.getUserRole().getId())
                 .build();
     }
 }

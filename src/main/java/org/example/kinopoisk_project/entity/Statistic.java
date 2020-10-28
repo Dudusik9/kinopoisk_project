@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "statistic")
@@ -22,7 +22,9 @@ public class Statistic{
     private Long numberOfVisits;
 
 //  Связь один пользователь - одна статистика
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    //    определяется имя поля для текущей таблицы,
+    //    по которому будет создан внешний ключ определяющий отношение один к одному на уровне базы данных
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     private User userStatistic;
 

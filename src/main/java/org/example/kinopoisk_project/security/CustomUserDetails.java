@@ -65,11 +65,7 @@ public class CustomUserDetails implements UserDetails {
                 true,
                 true,
                 true,
-//              Заглушка, необходимо разобрать как вытаскивать из Set User его конкретную роль
-//                Role.ADMIN.getAuthorities()
-//                user.getRole().iterator().next().getAuthorities()
-//                Пока вот такой костыль
-                user.getIdUserRole() == 1 ? Role.ADMIN.getAuthorities() : Role.GUEST.getAuthorities()
+                user.getUserRole().getRole().equals(Role.ADMIN.toString()) ? Role.ADMIN.getAuthorities() : Role.GUEST.getAuthorities()
         );
     }
 }

@@ -3,12 +3,9 @@ package org.example.kinopoisk_project.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.kinopoisk_project.model.Role;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -31,21 +28,22 @@ public class User extends EntityBase{
     @Column(name = "password")
     private String password;
 
-    @Column(name = "id_user_role")
-    private int idUserRole;
-
-// Как замапить так, чтобы писалось не в Set<Role>, а в конкретное поле Role
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_role"))
-    @Enumerated(EnumType.STRING)
-////    @Embedded
-    private Set<Role> role;
+//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_role"))
+//    @Enumerated(EnumType.STRING)
+//    private Set<Role> role;
 
 //  Связь один пользователь - много комментариев
     @OneToMany(mappedBy = "userFeedback", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Feedback> feedbackList = new ArrayList<>();
 
 // Связь один пользователь - одна статистика
-    @OneToOne(mappedBy = "userStatistic", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToOne(mappedBy = "userStatistic")
     private Statistic statistic;
+
+//    Связь много пользователей - одна роль
+    @ManyToOne
+    @JoinColumn(name = "id_user_role")
+    private UserRole userRole;
+
 }

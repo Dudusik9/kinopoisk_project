@@ -13,10 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FilmDto {
-    @JsonProperty("filmId")
+    @JsonProperty("film_id")
     private Long id;
 
-    @JsonProperty("movieTitle")
+    @JsonProperty("movie_title")
     private String movieTitle;
 
     @JsonProperty("year")

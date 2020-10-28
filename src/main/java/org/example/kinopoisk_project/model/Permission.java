@@ -2,9 +2,9 @@ package org.example.kinopoisk_project.model;
 
 public enum Permission {
 
-    READ("read"),
-    STATISTIC_READ("statisticRead"),
-    WRITE("write");
+    READ("READ"),
+    STATISTIC_READ("STATISTIC_READ"),
+    WRITE("WRITE");
 
 
     private final String permission;

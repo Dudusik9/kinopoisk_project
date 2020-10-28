@@ -1,6 +1,6 @@
 package org.example.kinopoisk_project.service.Impl;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import jdk.nashorn.internal.objects.annotations.Property;
 import org.example.kinopoisk_project.dto.ActorDto;
 import org.example.kinopoisk_project.dto.FilmDto;
 import org.example.kinopoisk_project.entity.Actor;
@@ -8,6 +8,7 @@ import org.example.kinopoisk_project.entity.Film;
 import org.example.kinopoisk_project.repository.ActorRepository;
 import org.example.kinopoisk_project.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -98,7 +99,7 @@ public class ActorServiceImpl implements ActorService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
             headers.setContentLength(byteArrayImage.length);
-            return new ResponseEntity<byte[]>(byteArrayImage, headers, HttpStatus.OK);
+            return new ResponseEntity<>(byteArrayImage, headers, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
         }

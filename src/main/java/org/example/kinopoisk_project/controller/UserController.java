@@ -20,31 +20,31 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public UserDto getUserById(@PathVariable("id") Long id){
         return userService.getUserById(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public UserDto saveUser(@RequestBody UserDto user){
         return userService.createUser(user);
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public UserDto updateUser(@RequestBody UserDto user){
         return userService.updateUser(user);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public void deleteUser(@PathVariable("id") Long id){
         userService.deleteUser(id);
     }

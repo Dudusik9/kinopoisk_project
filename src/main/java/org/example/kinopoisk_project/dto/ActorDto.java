@@ -19,15 +19,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActorDto {
-    @JsonProperty("actorId")
+    @JsonProperty("actor_id")
     private Long id;
 
-    @JsonProperty("firstName")
+    @JsonProperty("first_name")
     private String firstName;
 
-    @JsonProperty("secondName")
+    @JsonProperty("second_name")
     private String secondName;
 
-    @JsonProperty("yearOfBirth")
+    @JsonProperty("year_of_birth")
     private int yearOfBirth;
+
+
 }
