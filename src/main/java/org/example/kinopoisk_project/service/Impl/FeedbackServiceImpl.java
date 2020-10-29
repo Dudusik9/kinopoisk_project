@@ -38,15 +38,6 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public Collection<FeedbackDto> getAllFeedbackByUserId(Long id) {
-//        return feedbackRepository.
-//                findAllByUserFeedback(userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User didn't find")))
-//                .stream()
-//                .map(feedback -> conversionService.convert(feedback, FeedbackDto.class))
-//                .collect(Collectors.toList());
-//    }
-
     @Override
     public Collection<FeedbackDto> getAllFeedbackByUserId(Long id, Pageable pageable) {
         return feedbackRepository.

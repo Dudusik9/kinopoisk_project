@@ -1,4 +1,4 @@
-package org.example.kinopoisk_project.springconverters;
+package org.example.kinopoisk_project.converters;
 
 import org.example.kinopoisk_project.dto.UserDto;
 import org.example.kinopoisk_project.entity.User;

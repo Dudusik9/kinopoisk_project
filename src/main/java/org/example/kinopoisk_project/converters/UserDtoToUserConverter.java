@@ -1,14 +1,11 @@
-package org.example.kinopoisk_project.springconverters;
+package org.example.kinopoisk_project.converters;
 
 import org.example.kinopoisk_project.dto.UserDto;
 import org.example.kinopoisk_project.entity.User;
-import org.example.kinopoisk_project.entity.UserRole;
 import org.example.kinopoisk_project.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import javax.management.relation.RoleNotFoundException;
 
 @Component
 public class UserDtoToUserConverter implements Converter<UserDto, User> {

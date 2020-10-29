@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/statistic")
 public class StatisticController {
@@ -26,13 +28,13 @@ public class StatisticController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public StatisticDto addNewStatistic (@RequestBody StatisticDto statistic){
+    public StatisticDto addNewStatistic (@Valid  @RequestBody StatisticDto statistic){
         return statisticService.addNewStatistic(statistic);
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public StatisticDto updateStatistic (@RequestBody StatisticDto statistic){
+    public StatisticDto updateStatistic (@Valid @RequestBody StatisticDto statistic){
         return statisticService.updateStatistic(statistic);
     }
 

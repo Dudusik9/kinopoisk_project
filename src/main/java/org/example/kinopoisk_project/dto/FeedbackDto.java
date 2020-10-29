@@ -9,6 +9,9 @@ import lombok.Setter;
 import org.example.kinopoisk_project.entity.Film;
 import org.example.kinopoisk_project.entity.User;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 @Getter
 @Setter
 @Builder
@@ -17,6 +20,7 @@ import org.example.kinopoisk_project.entity.User;
 public class FeedbackDto {
     @JsonProperty("id")
     private Long id;
+
 
     @JsonProperty("user")
     private Long userId;

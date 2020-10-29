@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,13 +37,13 @@ public class FilmController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public FilmDto addNewFilm(@RequestBody FilmDto film) {
+    public FilmDto addNewFilm(@Valid @RequestBody FilmDto film) {
         return filmService.addNewFilm(film);
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public FilmDto updateFilm(@RequestBody FilmDto film){
+    public FilmDto updateFilm(@Valid @RequestBody FilmDto film){
         return filmService.updateFilm(film);
     }
 

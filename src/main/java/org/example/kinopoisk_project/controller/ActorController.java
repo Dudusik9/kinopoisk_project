@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,13 +38,13 @@ public class ActorController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public ActorDto addNewActor(@RequestBody ActorDto actor){
+    public ActorDto addNewActor(@Valid @RequestBody ActorDto actor){
         return actorService.addNewActor(actor);
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public ActorDto updateActor(@RequestBody ActorDto actor){
+    public ActorDto updateActor(@Valid @RequestBody ActorDto actor){
         return actorService.updateActor(actor);
     }
 

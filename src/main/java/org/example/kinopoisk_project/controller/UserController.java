@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,13 +34,13 @@ public class UserController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public UserDto saveUser(@RequestBody UserDto user){
+    public UserDto saveUser(@Valid @RequestBody UserDto user){
         return userService.createUser(user);
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('WRITE')")
-    public UserDto updateUser(@RequestBody UserDto user){
+    public UserDto updateUser(@Valid @RequestBody UserDto user){
         return userService.updateUser(user);
     }
 

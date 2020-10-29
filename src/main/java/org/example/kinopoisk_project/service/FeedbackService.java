@@ -7,7 +7,6 @@ import java.util.Collection;
 
 public interface FeedbackService {
     Collection<FeedbackDto> getAllFeedback(Pageable pageable);
-//    Collection<FeedbackDto> getAllFeedbackByUserId(Long id);
     Collection<FeedbackDto> getAllFeedbackByUserId(Long id, Pageable pageable);
     FeedbackDto getFeedbackById(Long id);
     FeedbackDto addNewFeedback (FeedbackDto feedbackDto);
