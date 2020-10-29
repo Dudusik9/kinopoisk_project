@@ -8,10 +8,13 @@ import org.example.kinopoisk_project.repository.UserRepository;
 import org.example.kinopoisk_project.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
@@ -35,10 +38,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         return conversionService.convert(feedback, FeedbackDto.class);
     }
 
-    @Override
-    public List<Feedback> getAllFeedback(Pageable pageable) {
-        return (List<Feedback>)feedbackRepository.findAll();
-    }
 
     @Override
     public FeedbackDto addNewFeedback(FeedbackDto feedbackDto) {
@@ -61,5 +60,29 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public void deleteFeedback(Long id) {
         feedbackRepository.deleteById(id);
+    }
+
+
+
+//    @Override
+//    public Page<Feedback> getAllFeedback(Pageable pageable) {
+//        return feedbackRepository.findAll(pageable);
+//    }
+
+    @Override
+    public Collection<FeedbackDto> getAllFeedback() {
+        return feedbackRepository.findAll()
+                .stream()
+                .map(feedback -> conversionService.convert(feedback, FeedbackDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<FeedbackDto> getAllFeedbackByUserId(Long id) {
+        return feedbackRepository.
+                findAllByUserFeedback(userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User didn't find")))
+                .stream()
+                .map(feedback -> conversionService.convert(feedback, FeedbackDto.class))
+                .collect(Collectors.toList());
     }
 }
