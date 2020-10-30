@@ -10,8 +10,8 @@ public class FeedbackToFeedbackDtoConverter implements Converter<Feedback, Feedb
     @Override
     public FeedbackDto convert(Feedback feedback) {
         return FeedbackDto.builder().id(feedback.getId())
-                .userId(feedback.getUserFeedback().getId())
-                .filmId(feedback.getFilmFeedback().getId())
+                .userNickname(feedback.getUserFeedback().getNickname())
+                .movieTitle(feedback.getFilmFeedback().getMovieTitle())
                 .text(feedback.getText())
                 .build();
     }

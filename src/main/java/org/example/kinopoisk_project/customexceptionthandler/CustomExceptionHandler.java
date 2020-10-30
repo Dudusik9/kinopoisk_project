@@ -1,4 +1,4 @@
-package org.example.kinopoisk_project.exceptionthandler;
+package org.example.kinopoisk_project.customexceptionthandler;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @RestController
-public class Handler {
+public class CustomExceptionHandler {
     @ExceptionHandler
     public ResponseEntity validationExceptionHandler(MethodArgumentNotValidException e ){
         Map<String, Object> body = new LinkedHashMap<>();

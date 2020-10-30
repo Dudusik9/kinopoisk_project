@@ -65,8 +65,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     public FeedbackDto updateFeedback(FeedbackDto feedbackDto) {
         Feedback feedback = feedbackRepository.findById(feedbackDto.getId()).orElseThrow(() -> new IllegalArgumentException("Feedback didn't find"));
         feedback.setId(feedbackDto.getId());
-        feedback.setUserFeedback(userRepository.findById(feedbackDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("User didn't find")));
-        feedback.setFilmFeedback(filmRepository.findById(feedbackDto.getFilmId()).orElseThrow(() -> new IllegalArgumentException("Film didn't find")));
+        feedback.setUserFeedback(userRepository.findByNickname(feedbackDto.getUserNickname()).orElseThrow(() -> new IllegalArgumentException("User didn't find")));
+        feedback.setFilmFeedback(filmRepository.findByMovieTitle(feedbackDto.getMovieTitle()).orElseThrow(() -> new IllegalArgumentException("Film didn't find")));
         feedback.setText(feedbackDto.getText());
         feedback = feedbackRepository.save(feedback);
         return conversionService.convert(feedback, FeedbackDto.class);

@@ -21,12 +21,17 @@ public class FeedbackDto {
     @JsonProperty("id")
     private Long id;
 
+//    @JsonProperty("user")
+//    private Long userId;
+//
+//    @JsonProperty("film")
+//    private Long filmId;
 
     @JsonProperty("user")
-    private Long userId;
+    private String userNickname;
 
-    @JsonProperty("film")
-    private Long filmId;
+    @JsonProperty("movie")
+    private String movieTitle;
 
     @JsonProperty("text")
     private String text;
