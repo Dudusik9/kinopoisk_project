@@ -11,6 +11,8 @@ import org.example.kinopoisk_project.entity.User;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -21,12 +23,6 @@ public class FeedbackDto {
     @JsonProperty("id")
     private Long id;
 
-//    @JsonProperty("user")
-//    private Long userId;
-//
-//    @JsonProperty("film")
-//    private Long filmId;
-
     @JsonProperty("user")
     private String userNickname;
 
@@ -35,4 +31,10 @@ public class FeedbackDto {
 
     @JsonProperty("text")
     private String text;
+
+    @JsonProperty("date_of_creation")
+    private LocalDateTime dateOfCreation;
+
+    @JsonProperty("last_update")
+    private LocalDateTime lastUpdate;
 }

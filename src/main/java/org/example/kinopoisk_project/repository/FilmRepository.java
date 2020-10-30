@@ -13,7 +13,7 @@ import java.util.Optional;
 @Transactional
 public interface FilmRepository extends CrudRepository<Film, Long>{
     Optional<Film> findById(Long id);
-//    Возвращает все фильмы с указанным актером
+
     List<Film> findFilmByActorListContains(Actor actor);
 
     Optional<Film> findByMovieTitle(String movieTitle);

@@ -5,6 +5,7 @@ import org.example.kinopoisk_project.entity.Feedback;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class FeedbackToFeedbackDtoConverter implements Converter<Feedback, FeedbackDto> {
     @Override
@@ -13,6 +14,8 @@ public class FeedbackToFeedbackDtoConverter implements Converter<Feedback, Feedb
                 .userNickname(feedback.getUserFeedback().getNickname())
                 .movieTitle(feedback.getFilmFeedback().getMovieTitle())
                 .text(feedback.getText())
+                .dateOfCreation(feedback.getCreateDate())
+                .lastUpdate(feedback.getUpdateDate())
                 .build();
     }
 }

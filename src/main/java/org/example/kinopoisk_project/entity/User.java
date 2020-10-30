@@ -28,11 +28,6 @@ public class User extends EntityBase{
     @Column(name = "password")
     private String password;
 
-//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_role"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> role;
-
 //  Связь один пользователь - много комментариев
     @OneToMany(mappedBy = "userFeedback", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Feedback> feedbackList = new ArrayList<>();
@@ -47,3 +42,10 @@ public class User extends EntityBase{
     private UserRole userRole;
 
 }
+
+
+
+//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id_role"))
+//    @Enumerated(EnumType.STRING)
+//    private Set<Role> role;

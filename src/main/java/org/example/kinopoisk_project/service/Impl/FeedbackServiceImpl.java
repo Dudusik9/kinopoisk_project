@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -57,6 +59,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public FeedbackDto addNewFeedback(FeedbackDto feedbackDto) {
         Feedback feedback = conversionService.convert(feedbackDto, Feedback.class);
+        feedback.setCreateDate(LocalDateTime.now());
         feedback = feedbackRepository.save(feedback);
         return conversionService.convert(feedback, FeedbackDto.class);
     }
@@ -68,6 +71,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setUserFeedback(userRepository.findByNickname(feedbackDto.getUserNickname()).orElseThrow(() -> new IllegalArgumentException("User didn't find")));
         feedback.setFilmFeedback(filmRepository.findByMovieTitle(feedbackDto.getMovieTitle()).orElseThrow(() -> new IllegalArgumentException("Film didn't find")));
         feedback.setText(feedbackDto.getText());
+        feedback.setUpdateDate(LocalDateTime.now());
         feedback = feedbackRepository.save(feedback);
         return conversionService.convert(feedback, FeedbackDto.class);
     }
