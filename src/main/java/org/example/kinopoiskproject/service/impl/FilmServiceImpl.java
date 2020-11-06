@@ -1,4 +1,4 @@
-package org.example.kinopoiskproject.service.Impl;
+package org.example.kinopoiskproject.service.impl;
 
 import org.example.kinopoiskproject.dto.ActorDto;
 import org.example.kinopoiskproject.dto.FilmDto;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class FilmServiceImpl implements FilmService {
 
-    @Value("${repository.films.UPLOADED_FOLDER}")
+    @Value("${repository.films.upload.path}")
     private String UPLOADED_FOLDER;
 
     private final FilmRepository filmRepository;

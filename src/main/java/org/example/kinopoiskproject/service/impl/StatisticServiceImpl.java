@@ -1,4 +1,4 @@
-package org.example.kinopoiskproject.service.Impl;
+package org.example.kinopoiskproject.service.impl;
 
 import org.example.kinopoiskproject.dto.StatisticDto;
 import org.example.kinopoiskproject.entity.Statistic;

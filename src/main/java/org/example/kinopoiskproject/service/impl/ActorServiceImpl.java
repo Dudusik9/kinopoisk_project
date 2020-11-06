@@ -1,4 +1,4 @@
-package org.example.kinopoiskproject.service.Impl;
+package org.example.kinopoiskproject.service.impl;
 
 import org.example.kinopoiskproject.dto.ActorDto;
 import org.example.kinopoiskproject.dto.FilmDto;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class ActorServiceImpl implements ActorService {
 
-    @Value("${repository.actors.UPLOADED_FOLDER}")
+    @Value("${repository.actors.upload.path}")
     private String UPLOADED_FOLDER;
 
     private final ActorRepository actorRepository;
@@ -78,7 +78,6 @@ public class ActorServiceImpl implements ActorService {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
-
             Actor actor = actorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Actor didn't find"));
             actor.setImage(path.toString());
             actorRepository.save(actor);

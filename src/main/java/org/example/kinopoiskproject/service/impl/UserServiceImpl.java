@@ -1,4 +1,4 @@
-package org.example.kinopoiskproject.service.Impl;
+package org.example.kinopoiskproject.service.impl;
 
 import org.example.kinopoiskproject.dto.UserDto;
 import org.example.kinopoiskproject.entity.User;
@@ -8,6 +8,7 @@ import org.example.kinopoiskproject.service.MailSender;
 import org.example.kinopoiskproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +22,15 @@ public class UserServiceImpl implements UserService {
     private final ConversionService conversionService;
     private final RoleRepository roleRepository;
     private final MailSender mailSender;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ConversionService conversionService, RoleRepository roleRepository, MailSender mailSender) {
+    public UserServiceImpl(UserRepository userRepository, ConversionService conversionService, RoleRepository roleRepository, MailSender mailSender, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.conversionService = conversionService;
         this.roleRepository = roleRepository;
         this.mailSender = mailSender;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -57,28 +60,34 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = conversionService.convert(userDto, User.class);
-
-//      Send email
         user.setActivationCode(UUID.randomUUID().toString());
-        String message = String.format(
-                "Hello, %s\n" +
-                        "Welcome to custom kinopoisk project!\n'n" +
-                "For activate your account visit next link: http://localhost:8080/api/v1/user/activate/%s",
-                            user.getNickname(),
-                            user.getActivationCode());
-        mailSender.send(user.getEmail(), "Activation code", message);
+
+        sendEmail(user);
 
         user = userRepository.save(user);
         return conversionService.convert(user, UserDto.class);
     }
 
+    public void sendEmail(User user){
+        if(user.getEmail() != null) {
+            String message = String.format(
+                    "Hello, %s\n" +
+                            "Welcome to custom kinopoisk project from Dudusik!\n\n" +
+                            "For activate your account visit next link: http://localhost:8080/api/v1/user/activate/%s\n" +
+                            "Please, don't replay on this letter",
+                    user.getNickname(),
+                    user.getActivationCode());
+            mailSender.send(user.getEmail(), "Activation code", message);
+        }
+    }
+
     @Override
     public boolean activateUser(String code) {
 //        User didn't find
-        User user = userRepository.findByActivationCode(code).get();
         if(!userRepository.findByActivationCode(code).isPresent())
             return false;
-//        User find
+//        If user exist
+        User user = userRepository.findByActivationCode(code).get();
         user.setActivationCode("activated");
         userRepository.save(user);
         return true;
@@ -91,7 +100,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setUserRole(roleRepository.findById(userDto.getIdRole()).orElseThrow(IllegalArgumentException::new));
         user = userRepository.save (user);
         return conversionService.convert(user, UserDto.class);
