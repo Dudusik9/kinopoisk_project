@@ -4,7 +4,7 @@ import org.example.kinopoiskproject.dto.UserDto;
 import org.example.kinopoiskproject.entity.User;
 import org.example.kinopoiskproject.repository.RoleRepository;
 import org.example.kinopoiskproject.repository.UserRepository;
-import org.example.kinopoiskproject.service.MailSender;
+import org.example.kinopoiskproject.service.MailSenderService;
 import org.example.kinopoiskproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -21,15 +21,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ConversionService conversionService;
     private final RoleRepository roleRepository;
-    private final MailSender mailSender;
+    private final MailSenderService mailSenderService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ConversionService conversionService, RoleRepository roleRepository, MailSender mailSender, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, ConversionService conversionService, RoleRepository roleRepository, MailSenderService mailSenderService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.conversionService = conversionService;
         this.roleRepository = roleRepository;
-        this.mailSender = mailSender;
+        this.mailSenderService = mailSenderService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
                             "Please, don't replay on this letter",
                     user.getNickname(),
                     user.getActivationCode());
-            mailSender.send(user.getEmail(), "Activation code", message);
+            mailSenderService.send(user.getEmail(), "Activation code", message);
         }
     }
 

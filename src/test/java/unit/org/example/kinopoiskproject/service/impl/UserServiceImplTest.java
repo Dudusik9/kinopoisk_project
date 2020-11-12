@@ -5,7 +5,7 @@ import org.example.kinopoiskproject.entity.User;
 import org.example.kinopoiskproject.entity.UserRole;
 import org.example.kinopoiskproject.repository.RoleRepository;
 import org.example.kinopoiskproject.repository.UserRepository;
-import org.example.kinopoiskproject.service.MailSender;
+import org.example.kinopoiskproject.service.MailSenderService;
 import org.example.kinopoiskproject.service.impl.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -36,7 +36,7 @@ public class UserServiceImplTest {
     @Mock
     private  RoleRepository roleRepository;
     @Mock
-    private  MailSender mailSender;
+    private MailSenderService mailSenderService;
     @Mock
     private PasswordEncoder passwordEncoder;
 
@@ -87,7 +87,7 @@ public class UserServiceImplTest {
 
         Mockito.verify(conversionService, Mockito.times(2)).convert(ArgumentMatchers.any(), ArgumentMatchers.any());
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
-        Mockito.verify(mailSender, Mockito.times(1))
+        Mockito.verify(mailSenderService, Mockito.times(1))
                 .send(ArgumentMatchers.eq(user.getEmail())
                         , ArgumentMatchers.anyString()
                         , ArgumentMatchers.anyString());
@@ -122,7 +122,7 @@ public class UserServiceImplTest {
         Mockito.when(conversionService.convert(inputUserDto, User.class)).thenReturn(user);
         userServiceImpl.createUser(inputUserDto);
 
-        Mockito.verify(mailSender, Mockito.times(0))
+        Mockito.verify(mailSenderService, Mockito.times(0))
                 .send(ArgumentMatchers.eq(null)
                         , ArgumentMatchers.anyString()
                         , ArgumentMatchers.anyString());
