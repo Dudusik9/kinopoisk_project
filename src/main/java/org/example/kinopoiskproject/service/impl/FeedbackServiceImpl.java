@@ -2,6 +2,7 @@ package org.example.kinopoiskproject.service.impl;
 
 import org.example.kinopoiskproject.dto.FeedbackDto;
 import org.example.kinopoiskproject.entity.Feedback;
+import org.example.kinopoiskproject.entity.User;
 import org.example.kinopoiskproject.repository.FeedbackRepository;
 import org.example.kinopoiskproject.repository.FilmRepository;
 import org.example.kinopoiskproject.repository.UserRepository;
@@ -9,10 +10,14 @@ import org.example.kinopoiskproject.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +27,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     private final FilmRepository filmRepository;
     private final ConversionService conversionService;
 
-
     @Autowired
     public FeedbackServiceImpl(FeedbackRepository feedbackRepository, UserRepository userRepository, FilmRepository filmRepository, ConversionService conversionService) {
         this.feedbackRepository = feedbackRepository;
@@ -30,6 +34,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         this.filmRepository = filmRepository;
         this.conversionService = conversionService;
     }
+
 
     @Override
     public Collection<FeedbackDto> getAllFeedback(Pageable pageable) {
@@ -80,4 +85,35 @@ public class FeedbackServiceImpl implements FeedbackService {
     public void deleteFeedback(Long id) {
         feedbackRepository.deleteById(id);
     }
+
+    @Override
+    public boolean putLikeFromCurrentUser(Long id) {
+        Feedback feedback = null;
+        Optional<Feedback> currentFeedback = feedbackRepository.findById(id);
+        if (!currentFeedback.isPresent())
+            return false;
+        feedback = currentFeedback.orElseThrow(() -> new IllegalArgumentException("Feedback didn't find"));
+        User currentUser = userRepository.findByNickname(SecurityContextHolder.getContext().getAuthentication().getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User didn't find"));
+        feedback.getUserSet().add(currentUser);
+        feedbackRepository.save(feedback);
+        return true;
+    }
+
+    @Override
+    public boolean deleteLikeFromCurrentUser(Long id) {
+        Feedback feedback = null;
+        Optional<Feedback> currentFeedback = feedbackRepository.findById(id);
+        if (!currentFeedback.isPresent())
+            return false;
+        feedback = currentFeedback.orElseThrow(() -> new IllegalArgumentException("Feedback didn't find"));
+        User currentUser = userRepository.findByNickname(SecurityContextHolder.getContext().getAuthentication().getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User didn't find"));
+        if(feedback.getUserSet().contains(currentUser)){
+            feedback.getUserSet().remove(currentUser);
+            feedbackRepository.save(feedback);
+        }
+        return true;
+    }
+
 }

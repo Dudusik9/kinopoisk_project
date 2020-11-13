@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,15 +18,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedbackDto {
+    @NotNull
     @JsonProperty("id")
     private Long id;
 
+    @NotNull
     @JsonProperty("user")
     private String userNickname;
 
+    @NotNull
     @JsonProperty("movie")
     private String movieTitle;
 
+    @NotEmpty
     @JsonProperty("text")
     private String text;
 
@@ -32,4 +39,7 @@ public class FeedbackDto {
 
     @JsonProperty("last_update")
     private LocalDateTime lastUpdate;
+
+    @JsonProperty("users_like")
+    private Set<String> usersLike;
 }

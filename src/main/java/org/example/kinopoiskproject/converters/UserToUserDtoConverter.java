@@ -5,6 +5,8 @@ import org.example.kinopoiskproject.entity.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class UserToUserDtoConverter implements Converter<User, UserDto> {
     @Override
@@ -17,6 +19,8 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
                 .lastName(user.getLastName())
                 .password(user.getPassword())
                 .idRole(user.getUserRole().getId())
+                .feedbacksLeft(user.getUserFeedbackList().stream().map(feedback -> feedback.getId()).collect(Collectors.toSet()))
+                .feedbacksLike(user.getLikesFeedbackSet().stream().map(feedback -> feedback.getId()).collect(Collectors.toSet()))
                 .build();
     }
 }

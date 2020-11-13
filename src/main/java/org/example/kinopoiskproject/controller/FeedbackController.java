@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,10 +49,10 @@ public class FeedbackController {
     }
 
     // Получение отзывов по id
-    @GetMapping("{id}/feedbacks")
+    @GetMapping("{id}/getAllFeedback")
     @PreAuthorize("hasAuthority('READ')")
-    public Collection<FeedbackDto> getFeedbacksByUserId(@PathVariable ("id") Long id
-            ,@PageableDefault(direction = Sort.Direction.ASC) Pageable pageable){
+    public Collection<FeedbackDto> getAllFeedbackByUserId(@PathVariable ("id") Long id
+            , @PageableDefault(direction = Sort.Direction.ASC) Pageable pageable){
         return feedbackService.getAllFeedbackByUserId(id, pageable);
     }
 
@@ -60,5 +62,25 @@ public class FeedbackController {
     public Collection<FeedbackDto> getAllFeedback(
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
         return feedbackService.getAllFeedback(pageable);
+    }
+
+    // Поставить лайк указанному отзыву от авторизированного пользователя
+    @GetMapping("{id}/like")
+    @PreAuthorize("hasAuthority('WRITE')")
+    public ResponseEntity getIdFeedbackAndLikeUseCurrentUser(@PathVariable ("id") Long id) {
+        if(feedbackService.putLikeFromCurrentUser(id))
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    // Удалить лайк поставленный указанному отзыву от авторизированного пользователя
+    @DeleteMapping("{id}/like")
+    @PreAuthorize("hasAuthority('WRITE')")
+    public ResponseEntity deleteLikeFromCurrentUser(@PathVariable ("id") Long id) {
+        if(feedbackService.deleteLikeFromCurrentUser(id))
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

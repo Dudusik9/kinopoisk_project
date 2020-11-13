@@ -12,4 +12,8 @@ public interface FeedbackService {
     FeedbackDto addNewFeedback (FeedbackDto feedbackDto);
     FeedbackDto updateFeedback(FeedbackDto feedbackDto);
     void deleteFeedback (Long id);
+
+    boolean putLikeFromCurrentUser(Long id);
+    boolean deleteLikeFromCurrentUser(Long id);
+
 }

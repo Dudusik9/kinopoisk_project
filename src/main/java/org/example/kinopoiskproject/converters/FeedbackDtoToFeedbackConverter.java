@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Component
 public class FeedbackDtoToFeedbackConverter implements Converter<FeedbackDto, Feedback> {
     private final UserRepository userRepository;
@@ -28,6 +31,7 @@ public class FeedbackDtoToFeedbackConverter implements Converter<FeedbackDto, Fe
         feedback.setUserFeedback(covertUserNicknameToUser(feedbackDto));
         feedback.setFilmFeedback(convertMoverTitleByFilm(feedbackDto));
         feedback.setText(feedbackDto.getText());
+        feedback.setUserSet(convertUserNicknameToSetUsers(feedbackDto));
         return feedback;
     }
 
@@ -37,6 +41,13 @@ public class FeedbackDtoToFeedbackConverter implements Converter<FeedbackDto, Fe
 
     private Film convertMoverTitleByFilm(FeedbackDto feedbackDto){
         return filmRepository.findByMovieTitle(feedbackDto.getMovieTitle()).orElseThrow(() -> new IllegalArgumentException("Film didn't find"));
+    }
+
+    private Set<User> convertUserNicknameToSetUsers(FeedbackDto feedbackDto){
+        return feedbackDto.getUsersLike().stream()
+                .map(userNickname -> userRepository.findByNickname(userNickname)
+                .orElseThrow(() -> new IllegalArgumentException("Cast exception")))
+                .collect(Collectors.toSet());
     }
 }
 

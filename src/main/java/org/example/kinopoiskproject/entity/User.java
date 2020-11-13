@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,7 +36,7 @@ public class User extends EntityBase{
 
 //  Связь один пользователь - много комментариев
     @OneToMany(mappedBy = "userFeedback", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Feedback> feedbackList = new ArrayList<>();
+    private List<Feedback> userFeedbackList = new ArrayList<>();
 
 // Связь один пользователь - одна статистика
     @OneToOne(mappedBy = "userStatistic")
@@ -45,7 +47,18 @@ public class User extends EntityBase{
     @JoinColumn(name = "id_user_role")
     private UserRole userRole;
 
+    //    Связь много пользователей - много отзывов
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "likes",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_feedback")
+    )
+    private Set<Feedback> likesFeedbackSet = new HashSet<>();
 }
+
+
 
 
 

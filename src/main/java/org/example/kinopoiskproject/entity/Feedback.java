@@ -7,6 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "feedback")
@@ -36,4 +38,12 @@ public class Feedback extends EntityBase{
     @ManyToOne
     @JoinColumn(name = "id_film")
     private Film filmFeedback;
+
+//    @ManyToMany(mappedBy = "feedbackSet")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "likes",
+            joinColumns = @JoinColumn(name = "id_feedback"),
+            inverseJoinColumns = @JoinColumn(name = "id_user"))
+    private Set<User> userSet = new HashSet<>();
 }

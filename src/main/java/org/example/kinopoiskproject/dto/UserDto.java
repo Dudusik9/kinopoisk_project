@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,4 +44,10 @@ public class UserDto{
     @Positive
     @JsonProperty("id_user_role")
     private Long idRole;
+
+    @JsonProperty("left_feedbacks")
+    private Set<Long> feedbacksLeft;
+
+    @JsonProperty("like_feedbacks")
+    private Set<Long> feedbacksLike;
 }

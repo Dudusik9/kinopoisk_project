@@ -25,7 +25,13 @@ public class Film extends EntityBase{
     private List<Feedback> feedback = new ArrayList<>();
 
 //    Связь ManyToMaNy. Много фильма - много актеров
-    @ManyToMany(mappedBy = "filmList")
+//    @ManyToMany(mappedBy = "filmList")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "actors_films",
+            joinColumns = @JoinColumn(name = "id_film"),
+            inverseJoinColumns = @JoinColumn(name = "id_actor")
+    )
     private Set<Actor> actorList = new HashSet<>();
 
 
